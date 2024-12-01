@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -34,33 +35,26 @@ fun AppBar() {
 
 @Composable
 fun ResetButton(onClick: () -> Unit) {
-    Button(onClick = onClick, modifier = Modifier.padding(16.dp).height(50.dp)) {
+    Button(onClick = onClick, modifier = Modifier
+        .padding(16.dp)
+        .height(50.dp)) {
         Text(
             text = "Restart",
-            style = TextStyle(textAlign = TextAlign.Center),
+            style = TextStyle(textAlign = TextAlign.Center, fontSize = MaterialTheme.typography.bodyMedium.fontSize),
             modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
 @Composable
-fun ButtonGrid(board: ArrayList<String>, onclick: (Int) -> Unit) {
+fun ButtonGrid(board: Array<Array<String>>, onclick: (Int, Int) -> Unit) {
     Column(verticalArrangement = Arrangement.SpaceEvenly) {
-        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            TicTacToeButton(text = board[0]) { onclick(0) }
-            TicTacToeButton(text = board[1]) { onclick(1) }
-            TicTacToeButton(text = board[2]) { onclick(2) }
-        }
-
-        Row(horizontalArrangement = Arrangement.SpaceAround) {
-            TicTacToeButton(text = board[3]) { onclick(3) }
-            TicTacToeButton(text = board[4]) { onclick(4) }
-            TicTacToeButton(text = board[5]) { onclick(5) }
-        }
-        Row(horizontalArrangement = Arrangement.SpaceAround) {
-            TicTacToeButton(text = board[6]) { onclick(6) }
-            TicTacToeButton(text = board[7]) { onclick(7) }
-            TicTacToeButton(text = board[8]) { onclick(8) }
+        board.forEachIndexed { rowIndex, row ->
+            Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                row.forEachIndexed { colIndex, it ->
+                    TicTacToeButton(text = it.toString()) { onclick(rowIndex, colIndex) }
+                }
+            }
         }
     }
 }
@@ -80,7 +74,10 @@ fun TicTacToeButton(text: String, onclick: () -> Unit) {
                     textAlign = TextAlign.Center,
                     fontSize = 35.sp
                 ),
-                modifier = Modifier.padding(16.dp).size(40.dp).fillMaxHeight()
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(40.dp)
+                    .fillMaxHeight()
             )
         }
     }
