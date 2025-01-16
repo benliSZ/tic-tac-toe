@@ -28,7 +28,6 @@ object GameUtils {
         } else if (board.all { row -> row.all { cell -> cell != "" } }) {
             return StateEnum.TIE
         }
-
         return StateEnum.CONTINUE
     }
 }
