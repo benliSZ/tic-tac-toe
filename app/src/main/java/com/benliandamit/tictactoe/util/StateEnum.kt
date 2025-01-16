@@ -1,14 +1,14 @@
-package main.util
+package com.benliandamit.tictactoe.util
 
-enum class StateEnum(val value: Char) {
-    TIE('T'),
-    X('X'),
-    O('O'),
-    CONTINUE('C');
+enum class StateEnum(val value: String) {
+    TIE("T"),
+    X("X"),
+    O("O"),
+    CONTINUE("C");
 
     companion object {
-        fun fromValue(value: Char): Key? {
-            return values().find { it.value == value }
+        fun fromValue(value: String): StateEnum? {
+            return entries.find { it.value == value }
         }
     }
 }
